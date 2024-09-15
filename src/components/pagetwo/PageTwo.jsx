@@ -8,6 +8,7 @@ function PageTwo() {
   const [loading, setLoading] = useState(true);
   const sliderRef = useRef(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentGroup, setCurrentGroup] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,41 +34,21 @@ function PageTwo() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const slider = sliderRef.current;
-    let scrollInterval;
-
-    const startScroll = () => {
-      scrollInterval = setInterval(() => {
-        if (slider && slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
-          slider.scrollLeft = 0;
-        } else if (slider) {
-          slider.scrollLeft += 1;
-        }
-      }, 30);
-    };
-
-    const stopScroll = () => {
-      clearInterval(scrollInterval);
-    };
-
-    if (slider && products.length > 0) {
-      startScroll();
-      slider.addEventListener('mouseenter', stopScroll);
-      slider.addEventListener('mouseleave', startScroll);
+  const scrollTo = (groupIndex) => {
+    if (sliderRef.current) {
+      const slideWidth = sliderRef.current.offsetWidth;
+      sliderRef.current.scrollTo({
+        left: slideWidth * groupIndex,
+        behavior: 'smooth'
+      });
+      setCurrentGroup(groupIndex);
     }
-
-    return () => {
-      if (slider) {
-        stopScroll();
-        slider.removeEventListener('mouseenter', stopScroll);
-        slider.removeEventListener('mouseleave', startScroll);
-      }
-    };
-  }, [products]);
+  };
 
   if (loading) return <div className="text-center py-4">Loading...</div>;
   if (error) return <div className="text-center py-4 text-red-500">{error}</div>;
+
+  const groupCount = Math.ceil(products.length / 3);
 
   return (
     <>
@@ -82,56 +63,64 @@ function PageTwo() {
             </span>
           </div>
         </div>
-        <div 
-          ref={sliderRef} 
-          className="flex overflow-x-auto sm:overflow-x-hidden"
-          style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
-        >
-          {products.map((item) => (
-            <div key={item.title} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 px-2 mb-4">
-              <div className="bg-white rounded-lg shadow-md p-4">
-                <img
-                  src={item.images[0].image}
-                  alt={item.title}
-                  className="w-full h-40 sm:h-48 object-contain mb-4"
-                />
-                <div className="flex mb-2">
-                  {[...Array(5)].map((_, index) => (
-                    <span
-                      key={index}
-                      className={`text-lg sm:text-xl ${
-                        index < Math.round(item.rating) ? "text-yellow-400" : "text-gray-300"
-                      }`}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <h3 className="font-semibold text-base sm:text-lg mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-gray-600 mb-1">Тип: настенная</p>
-                <p className="text-xs sm:text-sm text-gray-600 mb-1">
-                  Основные режимы: охлаждение / обогрев
-                </p>
-                <p className="text-xs sm:text-sm text-gray-600 mb-2">
-                  Уровень шума: от {item.cooling_power} дб(а)
-                </p>
-                <p className="text-xs sm:text-sm font-semibold mb-2 flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                  <span className="text-gray-400">{item.in_stock ? "В наличии" : "Нет в наличии"}</span>
-                </p>
-                <div className="flex justify-between items-center">
-                  <p className="font-bold text-lg sm:text-xl text-gray-900">
-                    {parseFloat(item.price).toFixed(2)} ₽/шт
+        <div className="relative">
+          <div 
+            ref={sliderRef} 
+            className="flex overflow-x-hidden scroll-smooth"
+          >
+            {products.map((item, index) => (
+              <div key={index} className="flex-shrink-0 w-full sm:w-1/3 px-2 mb-4">
+                <div className="bg-white rounded-lg shadow-md p-4">
+                  <img
+                    src={item.images[0].image}
+                    alt={item.title}
+                    className="w-full h-40 object-contain mb-4"
+                  />
+                  <div className="flex mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className={`text-lg sm:text-xl ${
+                          i < Math.round(item.rating) ? "text-yellow-400" : "text-gray-300"
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <h3 className="font-semibold text-base sm:text-lg mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-400 mb-1"> Тип: {item.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mb-1">{item.details}</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mb-2">{item.characteristics}</p>
+                  <p className="text-xs sm:text-sm font-semibold mb-2 flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="text-gray-400">{item.in_stock ? "В наличии" : "Нет в наличии"}</span>
                   </p>
-                  <button 
-                    className="bg-white border border-gray-300 rounded-md p-2 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    onClick={() => setSelectedProduct(item)}
-                  >
-                    🛒
-                  </button>
+                  <div className="flex justify-between items-center">
+                    <p className="font-bold text-lg sm:text-xl text-gray-900">
+                      {parseFloat(item.price).toFixed(2)} ₽/шт
+                    </p>
+                    <button 
+                      className="bg-white border border-gray-300 rounded-md p-2 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                      onClick={() => setSelectedProduct(item)}
+                    >
+                      🛒
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center mt-4">
+          {[...Array(groupCount)].map((_, index) => (
+            <button
+              key={index}
+              className={`h-2 w-2 rounded-full mx-1 ${
+                currentGroup === index ? 'bg-blue-500' : 'bg-gray-300'
+              }`}
+              onClick={() => scrollTo(index)}
+            />
           ))}
         </div>
       </div>

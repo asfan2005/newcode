@@ -29,10 +29,9 @@ function Footer() {
           const locationResponse = await axios.get(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
           );
-          setLocation(
-            locationResponse.data.display_name ||
-              "Название местоположения не найдено"
-          );
+          const fullAddress = locationResponse.data.display_name || "Название местоположения не найдено";
+          const shortenedAddress = fullAddress.split(',').slice(0, 2).join(', ');
+          setLocation(shortenedAddress);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -177,7 +176,7 @@ function Footer() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row justify-between mt-8 pt-4 border-t border-gray-700 text-sm">
-          <p className="mb-2 sm:mb-0">Политика и конфиденциальность</p>
+          <p className="mb-2 sm:mb-0">Политика конфиденциальности</p>
           <p>2024©СКВО</p>
         </div>
       </div>
