@@ -50,7 +50,7 @@ function ServicesKon() {
   ];
 
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4  md:my-10">
       <Header />
       <main id="main-content" className="my-10 md:my-0 relative">
         <div className="md:flex-row gap-8 max-w-7xl mx-auto">

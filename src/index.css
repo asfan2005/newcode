@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --header-height: 96px; /* Замените на фактическую высоту вашего Header'а */
+  --header-height: 100px; /* Замените на фактическую высоту вашего Header'а */
 }
 
 body {
@@ -18,7 +18,6 @@ body {
 }
 
 #app-container {
-  display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;

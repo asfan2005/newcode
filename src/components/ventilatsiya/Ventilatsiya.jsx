@@ -106,7 +106,7 @@ function Ventilatsiya() {
   };
 
   return (
-    <div className="mx-auto px-4 max-w-full md:my-6">
+    <div className="container mx-auto px-4 md:my-6">
       <Header />
       <main id="main-content" className="my-4 md:my-0 relative w-full">
         <p className="text-gray-400 text-[15px] mb-2">ГЛАВНАЯ / Вентиляция</p>

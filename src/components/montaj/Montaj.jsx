@@ -133,7 +133,7 @@ function Montaj() {
   );
 
   return (
-    <div className="mx-auto px-4 max-w-full">
+    <div className="container mx-auto px-4">
       <Header />
       <main id="main-content" className="my-10 relative">
         <div className="max-w-7xl mx-auto">

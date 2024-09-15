@@ -4,12 +4,14 @@ import div from "../../assets/div.svg";
 
 function Div() {
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4 md:my-10">
       <Header />
-      <main id="main-content" className="my-10 md:my-0 relative">
-        <div className="flex flex-col md:flex-row md:justify-between">
+      <main id="main-content" className="my-20 md:my-0 relative">
+        <div className="flex container mx-auto flex-col md:flex-row md:justify-between">
           <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
-            <h1 className="text-2xl md:text-3xl font-bold mb-4">Согласование с КГА</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mb-4">
+              Согласование с КГА
+            </h1>
             <p className="text-gray-400 mb-4">
               Выполняем работы по согласованию кондиционеров с Комитетом по
               Градостроительству Санкт-Петербурга
@@ -47,7 +49,7 @@ function Div() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto my-8 md:my-12">
+        <div className="container mx-auto mx-auto my-8 md:my-12">
           <p className="text-gray-400 mb-8 text-sm">
             На данный момент более 60 % управляющих компаний требуют
             предоставление согласования с КГА. В случае отсутствия необходимого
@@ -63,7 +65,9 @@ function Div() {
               <p className="text-gray-400">Работы "под ключ" 8 000 рублей</p>
             </div>
             <div className="w-full md:w-1/2 md:pl-4">
-              <h2 className="text-xl md:text-2xl font-bold mb-2">Срок согласования</h2>
+              <h2 className="text-xl md:text-2xl font-bold mb-2">
+                Срок согласования
+              </h2>
               <p className="flex items-center text-gray-400">
                 <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                 15 Рабочих Дней (3 Недели) + 5 Рабочих Дней Для Подготовки

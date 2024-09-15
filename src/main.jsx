@@ -19,6 +19,7 @@ import {
   Div,
   Korzina,
   News,
+  NavostiTwo,
 } from "./components/index.js";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -45,6 +46,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/div" element={<Div />} />
         <Route path="/korzina" element={<Korzina />} />
         <Route path="/news" element={<News />} />
+        <Route path="/navostiTwo" element={<NavostiTwo />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

@@ -2,10 +2,10 @@ import React from "react";
 import { Header, Page9, Footer } from "../index";
 import navosti1 from "../../assets/navosti1.svg";
 import navosti2 from "../../assets/navosti2.svg";
-
+import Vector from "../../assets/Vector.svg";
 function Navosti() {
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4 md:my-10">
       <Header />
       <main id="main-content" className="my-6 md:my-10 relative">
         <p className="text-gray-400 text-sm mb-4">
@@ -95,8 +95,9 @@ function Navosti() {
                     АПИК сообщает также, что в России и в странах, входящих в
                     Европейский экономический союз...
                   </p>
-                  <a href="#" className="text-blue-500 text-sm">
-                    Подробнее →
+                  <a href="#" className="text-blue-500 text-sm flex items-center gap-2">
+                    Подробнее
+                    <img src={Vector} alt="" />
                   </a>
                 </div>
               </div>

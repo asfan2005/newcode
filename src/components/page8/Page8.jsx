@@ -4,6 +4,7 @@ import image7 from "../../assets/image7.svg";
 import Vector from "../../assets/Vector.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom';
 
 function Page8() {
   const [isCarousel, setIsCarousel] = useState(false);
@@ -78,7 +79,7 @@ function Page8() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="container mx-auto  bg-white min-h-screen">
       <div className="container mx-auto px-4 py-6 sm:py-8">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
@@ -127,13 +128,13 @@ function NewsCard({ item, isLargeText }) {
         <p className={`text-gray-600 mb-3 sm:mb-4 line-clamp-2 flex-grow ${isLargeText ? 'text-sm sm:text-base' : 'text-xs'}`}>
           {item.description}
         </p>
-        <a
-          href="#"
+        <Link
+          to="/navostiTwo"
           className={`text-blue-500 flex items-center gap-1 sm:gap-2 hover:text-blue-600 font-medium ${isLargeText ? 'text-sm sm:text-base' : 'text-xs'}`}
         >
           {item.link}
           <img src={Vector} alt="" className="w-3 h-3 sm:w-4 sm:h-4" />
-        </a>
+        </Link>
       </div>
     </div>
   );

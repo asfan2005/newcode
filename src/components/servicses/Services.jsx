@@ -4,7 +4,7 @@ import servic from "../../assets/sevic.svg";
 
 function Services() {
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4  md:my-10">
       <Header />
       <main id="main-content" className="my-10 md:my-0 relative">
         <p className="text-gray-400 text-[14px]">
@@ -83,8 +83,10 @@ function Services() {
             />
           </div>
         </div>
-        <Page9 />
-        <Footer />
+       <div className="container mx-auto my-4">
+       <Page9 />
+       <Footer />
+       </div>
       </main>
     </div>
   );

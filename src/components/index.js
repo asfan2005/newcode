@@ -28,3 +28,4 @@ export { default as Navosti } from "./navosti/Navosti";
 export { default as Div } from "./div/Div";
 export { default as Korzina } from "./korzina/Korzina";
 export { default as News } from "./news/News";
+export { default as NavostiTwo } from "./navostiTwo/NavostiTwo";

@@ -10,7 +10,8 @@ function Obyekti() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njg0MzE3LCJpYXQiOjE3MjYwNzk1MTcsImp0aSI6ImI1MjFlMjhjNDdjYzRhZWNiODBmOWIzNzUxYjhkZWIyIiwidXNlcl9pZCI6MX0.ItWrUAskZMdpoyD0tAJGFRaBOpI1gdV3FaXp9fdXXkM";
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njg0MzE3LCJpYXQiOjE3MjYwNzk1MTcsImp0aSI6ImI1MjFlMjhjNDdjYzRhZWNiODBmOWIzNzUxYjhkZWIyIiwidXNlcl9pZCI6MX0.ItWrUAskZMdpoyD0tAJGFRaBOpI1gdV3FaXp9fdXXkM";
         const response = await axios.get(
           "http://212.67.12.22:8000/blog/object-image",
           {
@@ -40,10 +41,12 @@ function Obyekti() {
   }
 
   return (
-    <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-full">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       <Header />
       <main id="main-content" className="py-6 sm:py-12 my-10 lg:py-12">
-        <p className="text-gray-400 text-xs sm:text-sm mb-2">ГЛАВНАЯ / Объекты</p>
+        <p className="text-gray-400 text-xs sm:text-sm mb-2">
+          ГЛАВНАЯ / Объекты
+        </p>
         <h1 className="text-[#373737] text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
           Галерея наших объектов
         </h1>

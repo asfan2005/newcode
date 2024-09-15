@@ -31,7 +31,7 @@ function News() {
      fetchData();
    }, []);
   return (
-    <div className="mx-auto px-4 max-w-7xl md:my-10">
+    <div className="container mx-auto px-4 md:my-10">
       <Header />
       <main id="main-content" className="my-10 md:my-0 relative">
         <h1 className="text-2xl font-bold mb-8 text-gray-400">Последний Новости</h1>

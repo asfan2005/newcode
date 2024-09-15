@@ -67,7 +67,7 @@ function Malumot() {
   }
 
   return (
-    <div className="mx-auto px-4 max-w-full">
+    <div className="container mx-auto px-4">
       <Header />
       <main id="main-content" className="my-6 md:my-10 relative">
         <p className="text-gray-400 text-[15px]">ГЛАВНАЯ / кОНДИЦИОНЕРЫ/Сплит-система Ballu Olympio Edge BSO-09HN8_22Y</p>

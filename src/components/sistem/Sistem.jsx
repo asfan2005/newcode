@@ -4,7 +4,7 @@ import sistem from "../../assets/sistem.svg";
 
 function Sistem() {
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4 md:my-10">
       <Header />
       <main id="main-content" className="my-5 md:my-10 relative">
         <div className="flex flex-col md:flex-row justify-around max-w-7xl mx-auto">
@@ -94,8 +94,10 @@ function Sistem() {
           </div>
         </div>
 
-        <Page9 />
-        <Footer />
+       <div className="container mx-auto my-4">
+       <Page9 />
+       <Footer />
+       </div>
       </main>
     </div>
   );

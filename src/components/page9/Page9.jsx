@@ -11,7 +11,8 @@ function Page9() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njg0MzE3LCJpYXQiOjE3MjYwNzk1MTcsImp0aSI6ImI1MjFlMjhjNDdjYzRhZWNiODBmOWIzNzUxYjhkZWIyIiwidXNlcl9pZCI6MX0.ItWrUAskZMdpoyD0tAJGFRaBOpI1gdV3FaXp9fdXXkM";
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njg0MzE3LCJpYXQiOjE3MjYwNzk1MTcsImp0aSI6ImI1MjFlMjhjNDdjYzRhZWNiODBmOWIzNzUxYjhkZWIyIiwidXNlcl9pZCI6MX0.ItWrUAskZMdpoyD0tAJGFRaBOpI1gdV3FaXp9fdXXkM";
         const response = await axios.get(
           "http://212.67.12.22:8000/blog/contact-info",
           {
@@ -21,13 +22,15 @@ function Page9() {
           }
         );
         setContactInfo(response.data.results[0]);
-        
-        // Fetch location name based on lat and lon
+
         if (response.data.results[0].lat && response.data.results[0].lon) {
           const locationResponse = await axios.get(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${response.data.results[0].lat}&lon=${response.data.results[0].lon}&zoom=18&addressdetails=1`
           );
-          setLocationName(locationResponse.data.display_name || "Название местоположения не найдено");
+          setLocationName(
+            locationResponse.data.display_name ||
+              "Название местоположения не найдено"
+          );
         } else {
           setLocationName("Koordinatalar mavjud emas");
         }
@@ -42,13 +45,36 @@ function Page9() {
     fetchData();
   }, []);
 
+  const handlePhoneClick = (phone) => {
+    window.location.href = `tel:${phone}`;
+  };
+
+  const handleEmailClick = (email) => {
+    window.location.href = `mailto:${email}`;
+  };
+
+  const handleLocationClick = (lat, lon) => {
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`,
+      "_blank"
+    );
+  };
+
+  const handleTelegramClick = (username) => {
+    window.open(`https://t.me/${username}`, "_blank");
+  };
+
+  const handleWhatsAppClick = (phone) => {
+    window.open(`https://wa.me/${phone.replace(/[^0-9]/g, "")}`, "_blank");
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!contactInfo) return <div>No contact information available</div>;
 
   return (
     <div
-      className="w-full lg:h-[430px] min-h-screen bg-cover bg-center flex items-center py-10 px-4"
+      className="container mx-auto lg:h-[430px] min-h-[630px] bg-cover bg-center flex items-center py-10 px-4"
       style={{ backgroundImage: `url(${image9})` }}
     >
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
@@ -109,11 +135,16 @@ function Page9() {
         <div className="w-full lg:w-1/2 text-white lg:pl-20 mt-10 lg:mt-0">
           <div className="mb-4 flex items-center gap-5">
             <div className="w-20 h-0.5 bg-white"></div>
-            <h1 className="text-3xl lg:text-5xl font-bold">{contactInfo.title}</h1>
+            <h1 className="text-3xl lg:text-5xl font-bold">
+              {contactInfo.title}
+            </h1>
           </div>
           <p className="text-lg lg:text-xl mb-8">{contactInfo.description}</p>
           <div className="space-y-6">
-            <div className="flex items-center">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => handlePhoneClick(contactInfo.phone)}
+            >
               <div className="w-10 h-10 bg-blue-500 rounded-full mr-4 flex items-center justify-center">
                 <svg
                   className="w-5 h-5 text-white"
@@ -132,7 +163,10 @@ function Page9() {
               </div>
               <span className="text-lg lg:text-xl">{contactInfo.phone}</span>
             </div>
-            <div className="flex items-center">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => handleEmailClick(contactInfo.email)}
+            >
               <div className="w-10 h-10 bg-blue-500 rounded-full mr-4 flex items-center justify-center">
                 <svg
                   className="w-5 h-5 text-white"
@@ -151,7 +185,12 @@ function Page9() {
               </div>
               <span className="text-lg lg:text-xl">{contactInfo.email}</span>
             </div>
-            <div className="flex items-center">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() =>
+                handleLocationClick(contactInfo.lat, contactInfo.lon)
+              }
+            >
               <div className="w-10 h-10 bg-blue-500 rounded-full mr-4 flex items-center justify-center">
                 <svg
                   className="w-5 h-5 text-white"
@@ -177,7 +216,10 @@ function Page9() {
               <span className="text-lg lg:text-xl">{locationName}</span>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+              <div
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer"
+                onClick={() => handleTelegramClick(contactInfo.telegram)}
+              >
                 <svg
                   className="w-5 h-5 text-blue-500"
                   fill="currentColor"
@@ -187,7 +229,10 @@ function Page9() {
                   <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                 </svg>
               </div>
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+              <div
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer"
+                onClick={() => handleWhatsAppClick(contactInfo.phone)}
+              >
                 <svg
                   className="w-5 h-5 text-green-500"
                   fill="currentColor"

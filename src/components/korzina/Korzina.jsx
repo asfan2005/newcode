@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Header, Footer } from "../index";
 import image2 from "../../assets/image2.svg";
 import korzina from "../../assets/korzina.svg";
 
 function Korzina() {
+  const location = useLocation();
   const [quantity, setQuantity] = useState(1);
-  const basePrice = 36250.2;
+  const [basePrice, setBasePrice] = useState(36250.2);
   const [totalPrice, setTotalPrice] = useState(basePrice);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    if (location.state && location.state.selectedProduct) {
+      setSelectedProduct(location.state.selectedProduct);
+      console.log("Selected Product:", location.state.selectedProduct);
+      
+      if (location.state.selectedProduct.price) {
+        const price = parseFloat(location.state.selectedProduct.price);
+        if (!isNaN(price)) {
+          setBasePrice(price);
+          setTotalPrice(price);
+        }
+      }
+    }
+  }, [location]);
 
   const handleQuantityChange = (change) => {
     const newQuantity = Math.max(1, quantity + change);
@@ -14,8 +32,12 @@ function Korzina() {
     setTotalPrice(basePrice * newQuantity);
   };
 
+  const formatPrice = (price) => {
+    return typeof price === 'number' ? price.toFixed(2) : '0.00';
+  };
+
   return (
-    <div className="mx-auto px-4 max-w-full md:my-10">
+    <div className="container mx-auto px-4 md:my-10">
       <Header />
       <main id="main-content" className="my-10 md:my-0 relative">
         <div className="max-w-7xl mx-auto">
@@ -28,13 +50,13 @@ function Korzina() {
               <div className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 mb-8 shadow-md p-4 rounded-lg">
                 <div className="flex flex-col sm:flex-row items-center mb-4 sm:mb-0">
                   <img
-                    src={image2}
-                    alt="Сплит-система"
+                    src={selectedProduct?.image || image2}
+                    alt="Товар"
                     className="w-[183px] h-[110px] object-contain mr-0 sm:mr-4 mb-4 sm:mb-0"
                   />
                   <div className="text-center sm:text-left">
                     <h3 className="font-semibold text-[16px] mb-2">
-                      Сплит-система ballu olympio edge bso-09hn8 22y
+                      {selectedProduct?.name || "Сплит-система ballu olympio edge bso-09hn8 22y"}
                     </h3>
                     <button className="text-gray-500 text-[14px] border border-gray-300 rounded px-2 py-1">
                       Удалить ×
@@ -43,7 +65,7 @@ function Korzina() {
                 </div>
                 <div className="flex flex-col items-center sm:items-end">
                   <span className="font-bold text-[18px] mb-2">
-                    {totalPrice.toFixed(2)} ₽
+                    {formatPrice(totalPrice)} ₽
                   </span>
                   <div className="flex items-center border rounded">
                     <button
@@ -148,7 +170,7 @@ function Korzina() {
                 <h2 className="font-bold text-xl mb-4">ВАШ ЗАКАЗ</h2>
                 <div className="flex justify-between mb-2">
                   <span>Товары ({quantity})</span>
-                  <span>{totalPrice.toFixed(2)} руб.</span>
+                  <span>{formatPrice(totalPrice)} руб.</span>
                 </div>
                 <div className="flex justify-between mb-4">
                   <span>Оплата</span>
@@ -162,7 +184,7 @@ function Korzina() {
                   />
                   <button className="bg-gray-300 p-2 rounded-r-lg">→</button>
                 </div>
-                <div className="text-2xl font-bold mb-4">{totalPrice.toFixed(2)} руб.</div>
+                <div className="text-2xl font-bold mb-4">{formatPrice(totalPrice)} руб.</div>
                 <button className="w-full bg-blue-500 text-white py-3 rounded-lg">
                   ОФОРМИТЬ ЗАКАЗ
                 </button>
